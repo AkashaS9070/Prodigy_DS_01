@@ -1,0 +1,26 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+url = 'https://raw.githubusercontent.com/kindo-tk/PRODIGY_DS_01/main/worldpopulationdata.csv'
+df = pd.read_csv(url)
+
+df = df.rename(columns={'Country Name':'Country'})
+pop_2022 = df[['Country','2022']].rename(columns={'2022':'Population'})
+pop_2022 = pop_2022.sort_values('Population', ascending=False)
+
+top10 = pop_2022.head(10)
+plt.figure(figsize=(12,6))
+sns.barplot(data=top10, x='Country', y='Population', palette='viridis')
+plt.xticks(rotation=45, ha='right')
+plt.title('Top 10 Most Populated Countries in 2022')
+plt.tight_layout()
+plt.show()
+
+plt.figure(figsize=(10,6))
+sns.histplot(pop_2022['Population'], bins=30, kde=True, color='skyblue')
+plt.title('Distribution of Country Populations in 2022')
+plt.xlabel('Population')
+plt.ylabel('Number of Countries')
+plt.tight_layout()
+plt.show()
